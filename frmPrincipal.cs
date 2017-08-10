@@ -17,18 +17,40 @@ namespace VNJIngressos
     private Button button1;
     private Timer timer1;
     private Button button2;
-        private Button button3;
+    private ComboBox comboBox1;
+    private Label label1;
+    private Button button3;
+
+    string stringConexao = "SERVER=localhost;" + "DATABASE=vnj_local_novo;" + "UID=root;" + "PASSWORD=afornalli;";
 
     public frmPrincipal()
-    {
-      this.InitializeComponent();
+        {
+            this.InitializeComponent();
+            // Popula o ComboBox
+            this.comboBox1.Items.Insert(0, "Selecione uma opção");
+            this.comboBox1.SelectedIndex = 0;
+            MySqlConnection connection = new MySqlConnection(stringConexao);
+            string command = "SELECT caixa_id,nome FROM caixa;";
+            MySqlDataAdapter da = new MySqlDataAdapter(command, connection);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow row in dt.Rows)
+            {
+                // SÓ FUNCIONA ESSA LINHA SE A TABELA ESTIVER NA ODERM!
+                //comboBox1.Items.Insert(Convert.ToInt16(row.ItemArray[0]), row.ItemArray[0].ToString());
+
+                // CASO NÃO ESTEJA NA ORDEM UTILIZAR ESSE CÓDIGO!
+                string rowz = string.Format("{0} - {1}", row.ItemArray[0], row.ItemArray[1]);
+                this.comboBox1.Items.Add(rowz);
+            }
+            connection.Close();
     }
 
     private void updateAcesso(frmPrincipal.ImpIngresso ing, MySqlConnection conn)
     {
       string str = "update acesso set status = 0 where acesso_id = " + ing.acesso_id.ToString();
       MySqlCommand mySqlCommand = new MySqlCommand();
-      MySqlConnection mySqlConnection = new MySqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+      MySqlConnection mySqlConnection = new MySqlConnection(stringConexao);
       mySqlConnection.Open();
       try
       {
@@ -44,16 +66,17 @@ namespace VNJIngressos
       }
     }
 
-    private List<frmPrincipal.ImpIngresso> BuscarImpressos()
+    private List<frmPrincipal.ImpIngresso> BuscarImpressos(string CAIXA)
     {
-      string str = "select evento.titulo as Titulo, " + "           ingresso.titulo as Ingresso, " + "           coalesce(ingressocategoria.preco,0) as Valor, " + "           acesso.acesso_id as Numero, " + "           campeonato.nrApoliceSeg as Apolice," + "           campeonato.nomeSeguradora as Seguradora, " + "           acesso.chaveAcesso as Barcode, " + "           arena_tipoingresso.titulo as legenda,   " + "           case when coalesce(ingressocategoria.preco, 0) = 0 then 'VENDA PROIBIDA' ELSE ' ' END AS Observacao, " + "           coalesce(arena_setor.nome,'') as Setor, " + "           coalesce(arena_fila.identificador,'') as Fila, " + "           coalesce(arena_cadeira.identificador,'') Cadeira, " + "           concat(evento.data, ' ', evento.horario) as DataHora, " + "           categoria.titulo, " + "           acesso.acesso_id " + "from acesso " + "left join evento                on evento.evento_id = acesso.evento_id " + "inner join arena_tipoingresso on arena_tipoingresso.tpingresso_id = acesso.tpingresso_id " + "inner join ingressocategoria on ingressocategoria.ingressocategoria_id = acesso.ingressocategoria_id" + " inner join ingresso on ingresso.ingresso_id = ingressocategoria.ingresso_id " + "inner join campeonato on campeonato.campeonato_id = evento.campeonato_id " + "inner join categoria on categoria.categoria_id = ingressocategoria.categoria_id " + "left join arena_cadeira on arena_cadeira.cadeira_id = acesso.cadeira_id " + "left join arena_fila on arena_fila.fila_id = arena_cadeira.fila_id " + "left join arena_setor on arena_setor.setor_id = arena_fila.setor_id " + "where acesso.status = 11 and acesso.caixa_id = 28";
-    
+        // BUSCA INGRESSOS
+        string str = "select evento.titulo as Titulo, " + "           ingresso.titulo as Ingresso, " + "           coalesce(ingressocategoria.preco,0) as Valor, " + "           acesso.acesso_id as Numero, " + "           campeonato.nrApoliceSeg as Apolice," + "           campeonato.nomeSeguradora as Seguradora, " + "           acesso.chaveAcesso as Barcode, " + "           arena_tipoingresso.titulo as legenda,   " + "           case when coalesce(ingressocategoria.preco, 0) = 0 then 'VENDA PROIBIDA' ELSE ' ' END AS Observacao, " + "           coalesce(arena_setor.nome,'') as Setor, " + "           coalesce(arena_fila.identificador,'') as Fila, " + "           coalesce(arena_cadeira.identificador,'') Cadeira, " + "           concat(evento.data, ' ', evento.horario) as DataHora, " + "           categoria.titulo, " + "           acesso.acesso_id " + "from acesso " + "left join evento                on evento.evento_id = acesso.evento_id " + "inner join arena_tipoingresso on arena_tipoingresso.tpingresso_id = acesso.tpingresso_id " + "inner join ingressocategoria on ingressocategoria.ingressocategoria_id = acesso.ingressocategoria_id" + " inner join ingresso on ingresso.ingresso_id = ingressocategoria.ingresso_id " + "inner join campeonato on campeonato.campeonato_id = evento.campeonato_id " + "inner join categoria on categoria.categoria_id = ingressocategoria.categoria_id " + "left join arena_cadeira on arena_cadeira.cadeira_id = acesso.cadeira_id " + "left join arena_fila on arena_fila.fila_id = arena_cadeira.fila_id " + "left join arena_setor on arena_setor.setor_id = arena_fila.setor_id " + "where acesso.status = 11 and acesso.caixa_id = " + CAIXA;
+            
         List<frmPrincipal.ImpIngresso> impIngressoList = new List<frmPrincipal.ImpIngresso>();
             
-            MySqlConnection conn = new MySqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
-      conn.Open();
-      try
-      {
+        MySqlConnection conn = new MySqlConnection(stringConexao);
+        conn.Open();
+        try
+        {
         MySqlCommand mySqlCommand = new MySqlCommand();
         mySqlCommand.Connection = conn;
         mySqlCommand.CommandText = str;
@@ -61,33 +84,33 @@ namespace VNJIngressos
         MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader();
         while (mySqlDataReader.Read())
         {
-          frmPrincipal.ImpIngresso ing = new frmPrincipal.ImpIngresso();
-          ing.Titulo = mySqlDataReader.GetString(0).RemoveAccents();
-          ing.Ingresso = mySqlDataReader.GetString(1).RemoveAccents();
-          ing.Valor = mySqlDataReader.GetDouble(2);
-          ing.Numero = mySqlDataReader.GetInt32(3);
-          ing.Apolice = mySqlDataReader.GetString(4).RemoveAccents();
-          ing.Seguradora = mySqlDataReader.GetString(5).RemoveAccents();
-          ing.Barcode = mySqlDataReader.GetString(6).RemoveAccents();
-          ing.Legenda = mySqlDataReader.GetString(7).RemoveAccents();
-          ing.Observacao = mySqlDataReader.GetString(8).RemoveAccents();
-          ing.Setor = mySqlDataReader.GetString(9).RemoveAccents();
-          ing.Fila = mySqlDataReader.GetString(10).RemoveAccents();
-          ing.Cadeira = mySqlDataReader.GetString(11).RemoveAccents();
-          mySqlDataReader.GetString(12).RemoveAccents();
-          ing.DataHora = DateTime.ParseExact(mySqlDataReader.GetString(12), "yyyy-MM-dd HH:mm", (IFormatProvider) CultureInfo.InvariantCulture);
-          ing.Categoria = mySqlDataReader.GetString(13).RemoveAccents();
-          ing.acesso_id = mySqlDataReader.GetInt32(14);
-          impIngressoList.Add(ing);
-          this.updateAcesso(ing, conn);
-          this.ImprimirIng(ing);
+            frmPrincipal.ImpIngresso ing = new frmPrincipal.ImpIngresso();
+            ing.Titulo = mySqlDataReader.GetString(0).RemoveAccents();
+            ing.Ingresso = mySqlDataReader.GetString(1).RemoveAccents();
+            ing.Valor = mySqlDataReader.GetDouble(2);
+            ing.Numero = mySqlDataReader.GetInt32(3);
+            ing.Apolice = mySqlDataReader.GetString(4).RemoveAccents();
+            ing.Seguradora = mySqlDataReader.GetString(5).RemoveAccents();
+            ing.Barcode = mySqlDataReader.GetString(6).RemoveAccents();
+            ing.Legenda = mySqlDataReader.GetString(7).RemoveAccents();
+            ing.Observacao = mySqlDataReader.GetString(8).RemoveAccents();
+            ing.Setor = mySqlDataReader.GetString(9).RemoveAccents();
+            ing.Fila = mySqlDataReader.GetString(10).RemoveAccents();
+            ing.Cadeira = mySqlDataReader.GetString(11).RemoveAccents();
+            mySqlDataReader.GetString(12).RemoveAccents();
+            ing.DataHora = DateTime.ParseExact(mySqlDataReader.GetString(12), "yyyy-MM-dd HH:mm", (IFormatProvider) CultureInfo.InvariantCulture);
+            ing.Categoria = mySqlDataReader.GetString(13).RemoveAccents();
+            ing.acesso_id = mySqlDataReader.GetInt32(14);
+            impIngressoList.Add(ing);
+            this.updateAcesso(ing, conn);
+            this.ImprimirIng(ing);
         }
-      }
-      finally
-      {
+        }
+        finally
+        {
         conn.Close();
-      }
-      return impIngressoList;
+        }
+    return impIngressoList;
     }
 
     private void ImprimirIng(frmPrincipal.ImpIngresso ing)
@@ -191,19 +214,28 @@ namespace VNJIngressos
       this.timer1.Enabled = false;
       try
       {
-        this.BuscarImpressos();
+                //string CAIXA = this.comboBox1.SelectedValue.ToString();
+                String stringID  = comboBox1.Text;
+                string[] CAIXA = stringID.Split(" - ".ToCharArray());
+                this.BuscarImpressos(CAIXA[0]);
       }
       finally
       {
-        this.timer1.Enabled = true;
+                this.timer1.Enabled = true;
       }
     }
 
     private void button2_Click(object sender, EventArgs e)
     {
-      this.timer1.Enabled = true;
-      this.button2.Enabled = false;
-      this.button3.Enabled = true;
+            if (this.comboBox1.SelectedIndex == 0)
+            {
+                MessageBox.Show("Não é possível iniciar a venda sem informar um caixa!");
+            } else
+            {
+                this.timer1.Enabled = true;
+                this.button2.Enabled = false;
+                this.button3.Enabled = true;
+            }
     }
 
     private void button3_Click(object sender, EventArgs e)
@@ -227,13 +259,15 @@ namespace VNJIngressos
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 169);
+            this.button1.Location = new System.Drawing.Point(12, 199);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(260, 50);
             this.button1.TabIndex = 0;
             this.button1.Text = "Iniciar";
             this.button1.UseVisualStyleBackColor = true;
@@ -247,9 +281,9 @@ namespace VNJIngressos
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(12, 12);
+            this.button2.Location = new System.Drawing.Point(27, 87);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(136, 23);
+            this.button2.Size = new System.Drawing.Size(230, 50);
             this.button2.TabIndex = 1;
             this.button2.Text = "Iniciar Venda de Ingresso - Guiche 7";
             this.button2.UseVisualStyleBackColor = true;
@@ -258,25 +292,46 @@ namespace VNJIngressos
             // button3
             // 
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(12, 41);
+            this.button3.Location = new System.Drawing.Point(27, 143);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(136, 23);
+            this.button3.Size = new System.Drawing.Size(230, 50);
             this.button3.TabIndex = 2;
             this.button3.Text = "Parar Monitoramento";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(27, 60);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(230, 21);
+            this.comboBox1.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(27, 41);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(114, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Selecione o seu caixa:";
             // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "frmPrincipal";
             this.Text = "Integrador de Impressões";
             this.ResumeLayout(false);
+            this.PerformLayout();
+
 
         }
 

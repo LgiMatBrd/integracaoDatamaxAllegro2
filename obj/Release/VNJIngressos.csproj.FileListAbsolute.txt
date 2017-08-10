@@ -6,3 +6,11 @@ C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.Properties.Resour
 C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.csproj.GenerateResource.Cache
 C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.exe
 C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.pdb
+C:\xampp\htdocs\integracaoDatamaxAllegro2\bin\Release\VNJIngressos.exe
+C:\xampp\htdocs\integracaoDatamaxAllegro2\bin\Release\VNJIngressos.pdb
+C:\xampp\htdocs\integracaoDatamaxAllegro2\bin\Release\MySql.Data.dll
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\Release\VNJIngressos.frmPrincipal.resources
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\Release\VNJIngressos.Properties.Resources.resources
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\Release\VNJIngressos.csproj.GenerateResource.Cache
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\Release\VNJIngressos.exe
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\Release\VNJIngressos.pdb
