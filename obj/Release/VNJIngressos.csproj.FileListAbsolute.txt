@@ -1,0 +1,8 @@
+C:\Users\luigi\Desktop\Exe Impressora\bin\Release\VNJIngressos.exe
+C:\Users\luigi\Desktop\Exe Impressora\bin\Release\VNJIngressos.pdb
+C:\Users\luigi\Desktop\Exe Impressora\bin\Release\MySql.Data.dll
+C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.frmPrincipal.resources
+C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.Properties.Resources.resources
+C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.csproj.GenerateResource.Cache
+C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.exe
+C:\Users\luigi\Desktop\Exe Impressora\obj\Release\VNJIngressos.pdb
