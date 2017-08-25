@@ -18,6 +18,7 @@ namespace VNJIngressos
       else
       {
         // comentários adicionado
+        //
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
         Application.Run((Form) new frmPrincipal());
