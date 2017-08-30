@@ -265,13 +265,12 @@ namespace VNJIngressos
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 199);
+            this.button1.Location = new System.Drawing.Point(27, 199);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(260, 50);
+            this.button1.Size = new System.Drawing.Size(230, 50);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Iniciar";
+            this.button1.Text = "Testar Impressão";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // timer1
@@ -303,7 +302,7 @@ namespace VNJIngressos
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(27, 60);
+            this.comboBox1.Location = new System.Drawing.Point(27, 48);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(230, 21);
             this.comboBox1.TabIndex = 3;
@@ -311,7 +310,7 @@ namespace VNJIngressos
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 41);
+            this.label1.Location = new System.Drawing.Point(24, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(114, 13);
             this.label1.TabIndex = 4;
@@ -331,7 +330,6 @@ namespace VNJIngressos
             this.Text = "Integrador de Impressões";
             this.ResumeLayout(false);
             this.PerformLayout();
-
 
         }
 
