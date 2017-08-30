@@ -176,7 +176,7 @@ namespace VNJIngressos
     {
       this.ImprimirIng(new frmPrincipal.ImpIngresso()
       {
-        Titulo = "JEC VS BRASIL DE PELOTAS",
+        Titulo = "LUIGI É MUITO ZIKA",
         Ingresso = "Arquibancada Descoberta",
         Valor = 2.45,
         Numero = 89257,
