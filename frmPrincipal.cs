@@ -50,32 +50,7 @@ namespace VNJIngressos
     private List<frmPrincipal.ImpIngresso> BuscarImpressos()
     {
         // BUSCA INGRESSOS
-        string str = "select evento.titulo as Titulo, " +
-                "           ingresso.titulo as Ingresso, " + 
-                "           coalesce(ingressocategoria.preco,0) as Valor, " + 
-                "           acesso.acesso_id as Numero, " + 
-                "           campeonato.nrApoliceSeg as Apolice," + 
-                "           campeonato.nomeSeguradora as Seguradora, " + 
-                "           acesso.chaveAcesso as Barcode, " + 
-                "           arena_tipoingresso.titulo as legenda,   " + 
-                "           case when coalesce(ingressocategoria.preco, 0) = 0 then 'VENDA PROIBIDA' ELSE ' ' END AS Observacao, " + 
-                "           coalesce(arena_setor.nome,'') as Setor, " + 
-                "           coalesce(arena_fila.identificador,'') as Fila, " + 
-                "           coalesce(arena_cadeira.identificador,'') Cadeira, " + 
-                "           concat(evento.data, ' ', evento.horario) as DataHora, " + 
-                "           categoria.titulo, " + 
-                "           acesso.acesso_id " + 
-                "from acesso " + 
-                "left join evento                on evento.evento_id = acesso.evento_id " + 
-                "inner join arena_tipoingresso on arena_tipoingresso.tpingresso_id = acesso.tpingresso_id " + 
-                "inner join ingressocategoria on ingressocategoria.ingressocategoria_id = acesso.ingressocategoria_id" + 
-                " inner join ingresso on ingresso.ingresso_id = ingressocategoria.ingresso_id " + 
-                "inner join campeonato on campeonato.campeonato_id = evento.campeonato_id " + 
-                "inner join categoria on categoria.categoria_id = ingressocategoria.categoria_id " + 
-                "left join arena_cadeira on arena_cadeira.cadeira_id = acesso.cadeira_id " + 
-                "left join arena_fila on arena_fila.fila_id = arena_cadeira.fila_id " + 
-                "left join arena_setor on arena_setor.setor_id = arena_fila.setor_id " + 
-                "";
+        string str = "select evento.titulo as Titulo, ingresso.titulo as Ingresso, coalesce(ingressocategoria.preco,0) as Valor, acesso.acesso_id as Numero, campeonato.nrApoliceSeg as Apolice, campeonato.nomeSeguradora as Seguradora, acesso.chaveAcesso as Barcode, arena_tipoingresso.titulo as legenda, case when coalesce(ingressocategoria.preco, 0) = 0 then 'VENDA PROIBIDA' ELSE ' ' END AS Observacao, coalesce(arena_setor.nome,'') as Setor, coalesce(arena_fila.identificador,'') as Fila, coalesce(arena_cadeira.identificador,'') Cadeira, concat(evento.data, ' ', evento.horario) as DataHora, categoria.titulo, acesso.acesso_id from acesso left join evento on evento.evento_id = acesso.evento_id inner join arena_tipoingresso on arena_tipoingresso.tpingresso_id = acesso.tpingresso_id inner join ingressoloteitem on ingressoloteitem.ingressoloteitem_id = acesso.acesso_id inner join ingressocategoria on ingressocategoria.ingressocategoria_id = ingressoloteitem.chave and ingressoloteitem.tipo = 'categoria' inner join ingresso on ingresso.ingresso_id = ingressocategoria.ingresso_id inner join campeonato on campeonato.campeonato_id = evento.campeonato_id inner join categoria on categoria.categoria_id = ingressocategoria.categoria_id left join arena_cadeira on arena_cadeira.cadeira_id = acesso.cadeira_id left join arena_fila on arena_fila.fila_id = arena_cadeira.fila_id left join arena_setor on arena_setor.setor_id = arena_fila.setor_id where acesso.`status` = 9";
 
         List<frmPrincipal.ImpIngresso> impIngressoList = new List<frmPrincipal.ImpIngresso>();
             
@@ -108,6 +83,8 @@ namespace VNJIngressos
             ing.Categoria = mySqlDataReader.GetString(13).RemoveAccents();
             ing.acesso_id = mySqlDataReader.GetInt32(14);
             impIngressoList.Add(ing);
+
+            Console.WriteLine("zika");
             this.updateAcesso(ing, conn);
             this.ImprimirIng(ing);
         }
@@ -127,21 +104,21 @@ namespace VNJIngressos
             /////////////////
             string canhoto = "<STX>L<CR>D11" +
                 "<CR>290000301850390" + ing.Titulo +
-                "<CR>290000201300370" + ing.Setor +
+                "<CR>290000201300370" + ing.Legenda +
                 "<CR>290000301500350" + ing.Observacao +
                 "<CR>290000301550335" + ing.DataHora +
                 "<CR>290000601500300" + "R$ " + ing.Valor +
-                "<CR>290000201600290" + ing.Seguradora +
-                "<CR>290000201700278" + ing.Apolice +
+                "<CR>290000201400290" + ing.Seguradora +
+                "<CR>290000201400278" + ing.Apolice +
                 "<CR>";
 
             /////////////////
             // CORPO DO INGRESSO
             /////////////////
             string corpoIngresso = "<CR>" +
-                "<CR>390000400400210" + ing.Titulo +
+                "<CR>390000400400200" + ing.Titulo +
                 "<CR>390000200600190" + ing.Observacao +
-                "<CR>390000300800175" + ing.Setor +
+                "<CR>390000300800180" + ing.Legenda +
                 "<CR>390000201000235" + "Data: " + ing.DataHora +
                 "<CR>390000201200235" + "Valor:  R$ " + ing.Valor +
                 "<CR>390000101450235" + ing.Seguradora + "  " +ing.Apolice +
@@ -235,7 +212,7 @@ namespace VNJIngressos
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(27, 199);
+            this.button1.Location = new System.Drawing.Point(27, 155);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(230, 50);
             this.button1.TabIndex = 0;
@@ -251,7 +228,7 @@ namespace VNJIngressos
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(27, 87);
+            this.button2.Location = new System.Drawing.Point(27, 43);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(230, 50);
             this.button2.TabIndex = 1;
@@ -262,7 +239,7 @@ namespace VNJIngressos
             // button3
             // 
             this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(27, 143);
+            this.button3.Location = new System.Drawing.Point(27, 99);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(230, 50);
             this.button3.TabIndex = 2;
