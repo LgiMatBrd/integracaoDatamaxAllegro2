@@ -131,20 +131,28 @@ namespace VNJIngressos
                 num1 = 12;
             if (ing.Titulo.Length > 22)
                 num1 = 10;
-
+            
             // TAMANHO DO INGRESSO
             string str3 = str2 + "D10<CR>";
             // TITULO CANHOTO
-            string str4 = ing.Titulo.Length > 24 ? ing.Titulo.Substring(0, 24) : ing.Titulo;
+            string str4 = ing.Titulo.Length > 14 ? ing.Titulo.Substring(0, 14) : ing.Titulo;
             // VALOR E SEGURO CANHOTO
-            string str5 = str3 + "4911A0800250030" + str4.ToUpper() + "<CR>" + "4911A0800300045" + (ing.Ingresso.Length > 24 ? ing.Ingresso.Substring(0, 24) : ing.Ingresso) + "<CR>" + "4911A0800250065Valor: " + string.Format("{0:C}", (object)ing.Valor) + "<CR>" + "4911A0801150065Num:<CR>";
+            string str5 = str3 + "290000301900390" + str4.ToUpper() + "<CR>" + "290000201600370" + (ing.Ingresso.Length > 24 ? ing.Ingresso.Substring(0, 24) : ing.Ingresso) + "<CR>" + "4911A0800250065Valor: " + string.Format("{0:C}", (object)ing.Valor) + "<CR>" + "4911A0801150065Num:<CR>";
             string str6 = "4911A0801600065";
             int numero = ing.Numero;
             string str7 = numero.ToString().PadLeft(6, '0');
             string str8 = "<CR>";
             string str9 = str5 + str6 + str7 + str8 + "4911A0800250085" + ing.Seguradora + "<CR>" + "4911A0800250105Num. ApoliceLGI " + ing.Apolice + "<CR>";
-
-            string canhoto = "<STX>L<CR>D10<CR>4911A0800250030JEC VSx BRASIL DE PELOTAS<CR>4911A0800300045Arquibancada Descoberta<CR>4911A0800250065Valor: R$ 2,45<CR>4911A0801150065Num:<CR>4911A0801600065089257<CR>4911A0800250085Seguradora Itau Seguros<CR>4911A0800250105Num. ApoliceLGI <CR>";
+            
+            string canhoto = "<STX>L<CR>D11" +
+                "<CR>290000301900390JEC x BRASIL DE PELOTAS" +
+                "<CR>290000201600370Arquibancada Descoberta" +
+                "<CR>290000301600350VENDA PROIBIDA" +
+                "<CR>290000301550335 14/04/1997 18:06" +
+                "<CR>290000601500300R$ 0,00" +
+                "<CR>290000201600290Seguradora Itau Seguros" +
+                "<CR>290000201400280Num. 132465789" +
+                "<CR>";
 
             /////////////////
             // MIOLO DO MEIO
@@ -184,15 +192,17 @@ namespace VNJIngressos
             string str20 = str19 + "1911A08" + num2.ToString().PadLeft(4, '0') + "0160Num. ApoliceLGI " + ing.Apolice + "<CR>";
             num2 -= 65;
 
+
+            // CÓDIGO DE BARRAS IMBUTIDO ABAIXO
             PrinterSettings settings = new PrinterSettings();
-            RawPrinterHelper.SendStringToPrinter(settings.PrinterName.ToString(), (str20 + this.Centralizar(ing.Categoria.ToUpper(), 10, "1911A10" + num2.ToString().PadLeft(4, '0'), 160, 220) + "4d8304000400418" + ing.Barcode + "<CR>" + "Q0001<CR>" + "E<CR>").Replace("<SOH>", "\x0001").ToString().Trim().Replace("<STX>", "\x0002").ToString().Trim().Replace("<CR>", "\r\n").ToString().Trim());
+            RawPrinterHelper.SendStringToPrinter(settings.PrinterName.ToString(), (str20 + this.Centralizar(ing.Categoria.ToUpper(), 10, "1911A10" + num2.ToString().PadLeft(4, '0'), 160, 220) + "3d9404001900240" + ing.Barcode + "<CR>" + "Q0001<CR>" + "E<CR>").Replace("<SOH>", "\x0001").ToString().Trim().Replace("<STX>", "\x0002").ToString().Trim().Replace("<CR>", "\r\n").ToString().Trim());
         }
 
         private void button1_Click(object sender, EventArgs e)
     {
       this.ImprimirIng(new frmPrincipal.ImpIngresso()
       {
-        Titulo = "LUIGI É MUITO ZIKA",
+        Titulo = "LUIGI E MUITO ZIKA",
         Ingresso = "Arquibancada Descoberta",
         Valor = 2.45,
         Numero = 89257,
