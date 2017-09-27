@@ -143,7 +143,7 @@ namespace VNJIngressos
             string str7 = numero.ToString().PadLeft(6, '0');
             string str8 = "<CR>";
             string str9 = str5 + str6 + str7 + str8 + "4911A0800250085" + ing.Seguradora + "<CR>" + "4911A0800250105Num. ApoliceLGI " + ing.Apolice + "<CR>";
-            
+
             string canhoto = "<STX>L<CR>D11" +
                 "<CR>290000301900390JEC x BRASIL DE PELOTAS" +
                 "<CR>290000201600370Arquibancada Descoberta" +
@@ -151,7 +151,16 @@ namespace VNJIngressos
                 "<CR>290000301550335 14/04/1997 18:06" +
                 "<CR>290000601500300R$ 0,00" +
                 "<CR>290000201600290Seguradora Itau Seguros" +
-                "<CR>290000201400280Num. 132465789" +
+                "<CR>29000020140280Num. 132465789" +
+                "<CR>";
+
+            string corpoIngresso = "<CR>" +
+                "<CR>390000400400210" + ing.Titulo +
+                "<CR>390000200600190" + ing.Observacao +
+                "<CR>390000300800175" + ing.Setor +
+                "<CR>390000201000235" + "Data: " + ing.DataHora +
+                "<CR>390000201200235" + "Valor:  R$ " + ing.Valor +
+                "<CR>390000101450235" + ing.Seguradora + "  " +ing.Apolice +
                 "<CR>";
 
             /////////////////
@@ -195,7 +204,7 @@ namespace VNJIngressos
 
             // CÓDIGO DE BARRAS IMBUTIDO ABAIXO
             PrinterSettings settings = new PrinterSettings();
-            RawPrinterHelper.SendStringToPrinter(settings.PrinterName.ToString(), (str20 + this.Centralizar(ing.Categoria.ToUpper(), 10, "1911A10" + num2.ToString().PadLeft(4, '0'), 160, 220) + "3d9404001900240" + ing.Barcode + "<CR>" + "Q0001<CR>" + "E<CR>").Replace("<SOH>", "\x0001").ToString().Trim().Replace("<STX>", "\x0002").ToString().Trim().Replace("<CR>", "\r\n").ToString().Trim());
+            RawPrinterHelper.SendStringToPrinter(settings.PrinterName.ToString(), (canhoto + corpoIngresso + this.Centralizar(ing.Categoria.ToUpper(), 10, "1911A10" + num2.ToString().PadLeft(4, '0'), 160, 220) + "3d9404001900240" + ing.Barcode + "<CR>" + "Q0001<CR>" + "E<CR>").Replace("<SOH>", "\x0001").ToString().Trim().Replace("<STX>", "\x0002").ToString().Trim().Replace("<CR>", "\r\n").ToString().Trim());
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -204,7 +213,7 @@ namespace VNJIngressos
       {
         Titulo = "LUIGI E MUITO ZIKA",
         Ingresso = "Arquibancada Descoberta",
-        Valor = 2.45,
+        Valor = 100.00,
         Numero = 89257,
         Seguradora = "Seguradora Itau Seguros",
         Apolice = "Apolice: 00.82.00595970052",
