@@ -116,44 +116,22 @@ namespace VNJIngressos
 
     private void ImprimirIng(frmPrincipal.ImpIngresso ing)
         {
-
             /////////////////
-            // MIOLO DO CANHOTO
+            // MIOLO 
             /////////////////
-
-            string str1 = "<STX>m<CR>";
-            str1 = "<STX>O0220<CR>";
-            str1 = "<STX>V1<CR>";
-            str1 = "<STX>f440<CR>";
-            string str2 = "<STX>L<CR>";
-            int num1 = 14;
-            if (ing.Titulo.Length > 18)
-                num1 = 12;
-            if (ing.Titulo.Length > 22)
-                num1 = 10;
-            
-            // TAMANHO DO INGRESSO
-            string str3 = str2 + "D10<CR>";
-            // TITULO CANHOTO
-            string str4 = ing.Titulo.Length > 14 ? ing.Titulo.Substring(0, 14) : ing.Titulo;
-            // VALOR E SEGURO CANHOTO
-            string str5 = str3 + "290000301900390" + str4.ToUpper() + "<CR>" + "290000201600370" + (ing.Ingresso.Length > 24 ? ing.Ingresso.Substring(0, 24) : ing.Ingresso) + "<CR>" + "4911A0800250065Valor: " + string.Format("{0:C}", (object)ing.Valor) + "<CR>" + "4911A0801150065Num:<CR>";
-            string str6 = "4911A0801600065";
-            int numero = ing.Numero;
-            string str7 = numero.ToString().PadLeft(6, '0');
-            string str8 = "<CR>";
-            string str9 = str5 + str6 + str7 + str8 + "4911A0800250085" + ing.Seguradora + "<CR>" + "4911A0800250105Num. ApoliceLGI " + ing.Apolice + "<CR>";
-
             string canhoto = "<STX>L<CR>D11" +
-                "<CR>290000301900390JEC x BRASIL DE PELOTAS" +
-                "<CR>290000201600370Arquibancada Descoberta" +
-                "<CR>290000301600350VENDA PROIBIDA" +
-                "<CR>290000301550335 14/04/1997 18:06" +
-                "<CR>290000601500300R$ 0,00" +
-                "<CR>290000201600290Seguradora Itau Seguros" +
-                "<CR>29000020140280Num. 132465789" +
+                "<CR>290000301900390" + ing.Titulo +
+                "<CR>290000201600370" + ing.Observacao +
+                "<CR>290000301600350" + ing.Observacao +
+                "<CR>290000301550335" + ing.DataHora +
+                "<CR>290000601500300" + "R$ " + ing.Valor +
+                "<CR>290000201600290" + ing.Seguradora +
+                "<CR>29000020140280" + ing.Apolice +
                 "<CR>";
 
+            /////////////////
+            // CORPO DO INGRESSO
+            /////////////////
             string corpoIngresso = "<CR>" +
                 "<CR>390000400400210" + ing.Titulo +
                 "<CR>390000200600190" + ing.Observacao +
@@ -163,48 +141,9 @@ namespace VNJIngressos
                 "<CR>390000101450235" + ing.Seguradora + "  " +ing.Apolice +
                 "<CR>";
 
-            /////////////////
-            // MIOLO DO MEIO
-            /////////////////
-            int num2 = 130;
-            string str10 = ing.Titulo.Length > 28 ? ing.Titulo.Substring(0, 28) : ing.Titulo;
-            string str11 = canhoto + "1911A" + num1.ToString() + num2.ToString().PadLeft(4, '0') + "0160" + str10.ToUpper() + "<CR>";
-            num2 -= 11;
-            string str12 = str11 + this.Centralizar(ing.Legenda.ToUpper(), 10, "1911A08" + num2.ToString().PadLeft(4, '0'), 160, 220);
-            num2 -= 15;
-            string str14 = str12 + this.Centralizar(ing.Observacao.ToUpper(), 10, "1911A10" + num2.ToString().PadLeft(4, '0'), 160, 220);
-            //num2 -= 15;
-            //string str14 = str13 + "1911A09" + num2.ToString().PadLeft(4, '0') + "0160Setor:<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0190" + ing.Setor + "<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0270Fila:<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0300" + ing.Fila + "<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0330Cadeira:<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0375" + ing.Cadeira + "<CR>";
-            num2 -= 15;
-            string str15 = str14 + "1911A09" + num2.ToString().PadLeft(4, '0') + "0160DataLGI:<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0190" + string.Format("{0:dd/MM/yyyy}", (object)ing.DataHora) + "<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0270HoraLGI:<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0300" + string.Format("{0:HH:mm}", (object)ing.DataHora) + "<CR>";
-            num2 -= 15;
-            string[] strArray = new string[6]
-            {
-        str15 + "1911A09" + num2.ToString().PadLeft(4, '0') + "0160ValorLGI:<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0190" + string.Format("{0:C}", (object) ing.Valor) + "<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0270Num.LGI:<CR>",
-        "1911A09",
-        num2.ToString().PadLeft(4, '0'), 
-        "0300",
-        null,
-        null
-            };
-            int index1 = 4;
-            numero = ing.Numero;
-            string str16 = numero.ToString().PadLeft(8, '0');
-            strArray[index1] = str16;
-            int index2 = 5;
-            string str17 = "<CR>";
-            strArray[index2] = str17;
-            string str18 = string.Concat(strArray);
-            num2 -= 15;
-            string str19 = str18 + "1911A08" + num2.ToString().PadLeft(4, '0') + "0160" + ing.Seguradora + "<CR>";
-            num2 -= 15;
-            string str20 = str19 + "1911A08" + num2.ToString().PadLeft(4, '0') + "0160Num. ApoliceLGI " + ing.Apolice + "<CR>";
-            num2 -= 65;
-
-
             // CÓDIGO DE BARRAS IMBUTIDO ABAIXO
             PrinterSettings settings = new PrinterSettings();
-            RawPrinterHelper.SendStringToPrinter(settings.PrinterName.ToString(), (canhoto + corpoIngresso + this.Centralizar(ing.Categoria.ToUpper(), 10, "1911A10" + num2.ToString().PadLeft(4, '0'), 160, 220) + "3d9404001900240" + ing.Barcode + "<CR>" + "Q0001<CR>" + "E<CR>").Replace("<SOH>", "\x0001").ToString().Trim().Replace("<STX>", "\x0002").ToString().Trim().Replace("<CR>", "\r\n").ToString().Trim());
+            RawPrinterHelper.SendStringToPrinter(settings.PrinterName.ToString(), (canhoto + corpoIngresso  + "3d9404001900240" + ing.Barcode + "<CR>" + "Q0001<CR>" + "E<CR>").Replace("<SOH>", "\x0001").ToString().Trim().Replace("<STX>", "\x0002").ToString().Trim().Replace("<CR>", "\r\n").ToString().Trim());
         }
 
         private void button1_Click(object sender, EventArgs e)
