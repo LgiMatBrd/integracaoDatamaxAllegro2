@@ -1,0 +1,9 @@
+C:\xampp\htdocs\integracaoDatamaxAllegro2\bin\x86\Release\VNJIngressos.exe
+C:\xampp\htdocs\integracaoDatamaxAllegro2\bin\x86\Release\VNJIngressos.pdb
+C:\xampp\htdocs\integracaoDatamaxAllegro2\bin\x86\Release\MySql.Data.dll
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.frmPrincipal.resources
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.Properties.Resources.resources
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.csproj.GenerateResource.Cache
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.exe
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.pdb
+C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.csprojResolveAssemblyReference.cache

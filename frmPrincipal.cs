@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using System.Drawing.Printing;
 
 namespace VNJIngressos
 {
@@ -27,7 +28,7 @@ namespace VNJIngressos
         {
             this.InitializeComponent();
             // Popula o ComboBox
-            /*this.comboBox1.Items.Insert(0, "Selecione uma opção");
+            this.comboBox1.Items.Insert(0, "Selecione uma opção");
             this.comboBox1.SelectedIndex = 0;
             MySqlConnection connection = new MySqlConnection(stringConexao);
             string command = "SELECT caixa_id,nome FROM caixa;";
@@ -43,7 +44,7 @@ namespace VNJIngressos
                 string rowz = string.Format("{0} - {1}", row.ItemArray[0], row.ItemArray[1]);
                 this.comboBox1.Items.Add(rowz);
             }
-            connection.Close();*/
+            connection.Close();
     }
 
     private void updateAcesso(frmPrincipal.ImpIngresso ing, MySqlConnection conn)
@@ -164,7 +165,7 @@ namespace VNJIngressos
             {
         str15 + "1911A09" + num2.ToString().PadLeft(4, '0') + "0160ValorLGI:<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0190" + string.Format("{0:C}", (object) ing.Valor) + "<CR>" + "1911A09" + num2.ToString().PadLeft(4, '0') + "0270Num.LGI:<CR>",
         "1911A09",
-        num2.ToString().PadLeft(4, '0'),
+        num2.ToString().PadLeft(4, '0'), 
         "0300",
         null,
         null
