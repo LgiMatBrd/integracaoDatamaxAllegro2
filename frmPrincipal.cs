@@ -115,7 +115,7 @@ namespace VNJIngressos
             // CORPO DO INGRESSO
             /////////////////
             string corpoIngresso = "<CR>" +
-                "<CR>390000400400200" + ing.Titulo +
+                "<CR>390000400400" + Centralizar2(180, ing.Titulo) + "" + ing.Titulo +
                 "<CR>390000200600190" + ing.Observacao +
                 "<CR>390000300800180" + ing.Legenda +
                 "<CR>390000201000235" + "Data: " + ing.DataHora +
