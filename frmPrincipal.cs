@@ -110,7 +110,7 @@ namespace VNJIngressos
                 "<CR>29000020" + Centralizar2(100, ing.Seguradora) + "0290" + ing.Seguradora +
                 "<CR>29000020" + Centralizar2(100,ing.Apolice) + "0278" + ing.Apolice +
                 "<CR>";
-
+             
             /////////////////
             // CORPO DO INGRESSO
             /////////////////
