@@ -103,7 +103,7 @@ namespace VNJIngressos
             // MIOLO 
             /////////////////
             string canhoto = "<STX>L<CR>D11" +
-                "<CR>29000030" + Centralizar2(105, ing.Titulo) + "0390" + ing.Titulo +
+                "<CR>29000030" + Centralizar2(108, ing.Titulo) + "0390" + ing.Titulo +
                 "<CR>29000020" + Centralizar2(110, ing.Legenda) + "0370" + ing.Legenda +
                 "<CR>29000020" + Centralizar2(82, ing.Campeonato) + "0350" + ing.Campeonato +
                 "<CR>290000301630335" + ing.DataHora +
