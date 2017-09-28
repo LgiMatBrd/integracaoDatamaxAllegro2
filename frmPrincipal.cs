@@ -118,7 +118,7 @@ namespace VNJIngressos
                 "<CR>390000400400" + Centralizar2(180, ing.Titulo) + "" + ing.Titulo +
                 "<CR>390000200600" + Centralizar2(150, ing.Observacao) + "" + ing.Observacao +
                 "<CR>390000300800" + Centralizar2(150, ing.Legenda) + "" + ing.Legenda +
-                "<CR>390000201000235" + "Data: " + ing.DataHora +
+                "<CR>390000201000235" + "Data: " + ing.DataHora + 
                 "<CR>390000201200235" + "Valor:  R$ " + ing.Valor +
                 "<CR>390000101450235" + ing.Seguradora + "  " +ing.Apolice +
                 "<CR>";
