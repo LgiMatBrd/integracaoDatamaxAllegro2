@@ -98,18 +98,17 @@ namespace VNJIngressos
 
     private void ImprimirIng(frmPrincipal.ImpIngresso ing)
         {
-            Console.Write(ing);
             /////////////////
             // MIOLO 
             /////////////////
             string canhoto = "<STX>L<CR>D11" +
-                "<CR>290000301850390" + ing.Titulo +
-                "<CR>290000201300370" + ing.Legenda +
-                "<CR>290000301500350" + ing.Observacao +
-                "<CR>290000301550335" + ing.DataHora +
-                "<CR>290000601500300" + "R$ " + ing.Valor +
-                "<CR>290000201400290" + ing.Seguradora +
-                "<CR>290000201400278" + ing.Apolice +
+                "<CR>29000030" + Centralizar2(125, ing.Titulo) + "0390" + ing.Titulo +
+                "<CR>29000020" + Centralizar2(110, ing.Legenda) + "0370" + ing.Legenda +
+                "<CR>29000030" + Centralizar2(115, ing.Observacao) + "0350" + ing.Observacao +
+                "<CR>290000301630335" + ing.DataHora +
+                "<CR>29000060" + Centralizar2(135, ing.Valor.ToString()) + "0300" + "R$ " + ing.Valor +
+                "<CR>29000020" + Centralizar2(100, ing.Seguradora) + "0290" + ing.Seguradora +
+                "<CR>29000020" + Centralizar2(100,ing.Apolice) + "0278" + ing.Apolice +
                 "<CR>";
 
             /////////////////
@@ -137,8 +136,8 @@ namespace VNJIngressos
         Ingresso = "Arquibancada Descoberta",
         Valor = 100.00,
         Numero = 89257,
-        Seguradora = "Seguradora Itau Seguros",
-        Apolice = "Apolice: 00.82.00595970052",
+        Seguradora = "Itau Seguros",
+        Apolice = "00.82.00595970052",
         Barcode = "016143577727",
         Legenda = "CBF",
         Observacao = "VENDA PROIBIDA",
@@ -166,7 +165,17 @@ namespace VNJIngressos
       return str;
     }
 
-    private void timer1_Tick(object sender, EventArgs e)
+    private int Centralizar2(int iPosIni, string sTexto)
+    {
+        for (int index = 0; index < sTexto.Length; ++index)
+        {
+            iPosIni = iPosIni + 3;
+        }
+        Console.WriteLine(iPosIni);
+        return iPosIni;
+    }
+
+        private void timer1_Tick(object sender, EventArgs e)
     {
       this.timer1.Enabled = false;
       try
@@ -218,7 +227,7 @@ namespace VNJIngressos
             this.button1.TabIndex = 0;
             this.button1.Text = "Testar Impressão";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
+            this.button1.Visible = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // timer1
