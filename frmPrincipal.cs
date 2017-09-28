@@ -121,6 +121,7 @@ namespace VNJIngressos
                 "<CR>390000300800" + Centralizar2(150, ing.Legenda) + "" + ing.Legenda +
                 "<CR>390000201000235" + "Data: " + ing.DataHora + 
                 "<CR>390000201200235" + "Valor:  R$ " + ing.Valor +
+                "<CR>390000201350235" + ing.Observacao +
                 "<CR>390000101450235" + ing.Seguradora + "  " +ing.Apolice +
                 "<CR>";
 
@@ -134,6 +135,7 @@ namespace VNJIngressos
       this.ImprimirIng(new frmPrincipal.ImpIngresso()
       {
         Titulo = "JUVENTUDE x PAYSANDU",
+        Campeonato = "Basileirão Série B",
         Ingresso = "Arquibancada Descoberta",
         Valor = 100.00,
         Numero = 89257,
