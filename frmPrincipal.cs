@@ -50,7 +50,7 @@ namespace VNJIngressos
     private List<frmPrincipal.ImpIngresso> BuscarImpressos()
     {
         // BUSCA INGRESSOS
-        string str = "select evento.titulo as Titulo, ingresso.titulo as Ingresso, coalesce(ingressocategoria.preco,0) as Valor, acesso.acesso_id as Numero, campeonato.nrApoliceSeg as Apolice, campeonato.nomeSeguradora as Seguradora, acesso.chaveAcesso as Barcode, arena_tipoingresso.titulo as legenda, case when coalesce(ingressocategoria.preco, 0) = 0 then 'VENDA PROIBIDA' ELSE ' ' END AS Observacao, coalesce(arena_setor.nome,'') as Setor, coalesce(arena_fila.identificador,'') as Fila, coalesce(arena_cadeira.identificador,'') Cadeira, concat(evento.data, ' ', evento.horario) as DataHora, categoria.titulo, acesso.acesso_id from acesso left join evento on evento.evento_id = acesso.evento_id inner join arena_tipoingresso on arena_tipoingresso.tpingresso_id = acesso.tpingresso_id inner join ingressoloteitem on ingressoloteitem.ingressoloteitem_id = acesso.acesso_id inner join ingressocategoria on ingressocategoria.ingressocategoria_id = ingressoloteitem.chave and ingressoloteitem.tipo = 'categoria' inner join ingresso on ingresso.ingresso_id = ingressocategoria.ingresso_id inner join campeonato on campeonato.campeonato_id = evento.campeonato_id inner join categoria on categoria.categoria_id = ingressocategoria.categoria_id left join arena_cadeira on arena_cadeira.cadeira_id = acesso.cadeira_id left join arena_fila on arena_fila.fila_id = arena_cadeira.fila_id left join arena_setor on arena_setor.setor_id = arena_fila.setor_id where acesso.`status` = 9";
+        string str = "select evento.titulo as Titulo, ingresso.titulo as Ingresso, coalesce(ingressocategoria.preco,0) as Valor, acesso.acesso_id as Numero, campeonato.nrApoliceSeg as Apolice, campeonato.nomeSeguradora as Seguradora, acesso.chaveAcesso as Barcode, arena_tipoingresso.titulo as legenda, case when coalesce(ingressocategoria.preco, 0) = 0 then 'VENDA PROIBIDA' ELSE ' ' END AS Observacao, coalesce(arena_setor.nome,'') as Setor, coalesce(arena_fila.identificador,'') as Fila, coalesce(arena_cadeira.identificador,'') Cadeira, concat(evento.data, ' ', evento.horario) as DataHora, categoria.titulo, acesso.acesso_id, evento.campeonato as Campeonato from acesso left join evento on evento.evento_id = acesso.evento_id inner join arena_tipoingresso on arena_tipoingresso.tpingresso_id = acesso.tpingresso_id inner join ingressoloteitem on ingressoloteitem.ingressoloteitem_id = acesso.acesso_id inner join ingressocategoria on ingressocategoria.ingressocategoria_id = ingressoloteitem.chave and ingressoloteitem.tipo = 'categoria' inner join ingresso on ingresso.ingresso_id = ingressocategoria.ingresso_id inner join campeonato on campeonato.campeonato_id = evento.campeonato_id inner join categoria on categoria.categoria_id = ingressocategoria.categoria_id left join arena_cadeira on arena_cadeira.cadeira_id = acesso.cadeira_id left join arena_fila on arena_fila.fila_id = arena_cadeira.fila_id left join arena_setor on arena_setor.setor_id = arena_fila.setor_id where acesso.`status` = 9";
 
         List<frmPrincipal.ImpIngresso> impIngressoList = new List<frmPrincipal.ImpIngresso>();
             
@@ -82,6 +82,7 @@ namespace VNJIngressos
             ing.DataHora = DateTime.ParseExact(mySqlDataReader.GetString(12), "yyyy-MM-dd HH:mm", (IFormatProvider) CultureInfo.InvariantCulture);
             ing.Categoria = mySqlDataReader.GetString(13).RemoveAccents();
             ing.acesso_id = mySqlDataReader.GetInt32(14);
+            ing.Campeonato = mySqlDataReader.GetString(15);
             impIngressoList.Add(ing);
 
             Console.WriteLine("zika");
@@ -104,7 +105,7 @@ namespace VNJIngressos
             string canhoto = "<STX>L<CR>D11" +
                 "<CR>29000030" + Centralizar2(125, ing.Titulo) + "0390" + ing.Titulo +
                 "<CR>29000020" + Centralizar2(110, ing.Legenda) + "0370" + ing.Legenda +
-                "<CR>29000030" + Centralizar2(115, ing.Observacao) + "0350" + ing.Observacao +
+                "<CR>29000020" + Centralizar2(82, ing.Campeonato) + "0350" + ing.Campeonato +
                 "<CR>290000301630335" + ing.DataHora +
                 "<CR>29000060" + Centralizar2(135, ing.Valor.ToString()) + "0300" + "R$ " + ing.Valor +
                 "<CR>29000020" + Centralizar2(100, ing.Seguradora) + "0290" + ing.Seguradora +
@@ -115,8 +116,8 @@ namespace VNJIngressos
             // CORPO DO INGRESSO
             /////////////////
             string corpoIngresso = "<CR>" +
-                "<CR>390000400400" + Centralizar2(180, ing.Titulo) + "" + ing.Titulo +
-                "<CR>390000200600" + Centralizar2(150, ing.Observacao) + "" + ing.Observacao +
+                "<CR>390000400400" + Centralizar2(160, ing.Titulo) + "" + ing.Titulo +
+                "<CR>390000200600" + Centralizar2(130, ing.Campeonato) + "" + ing.Campeonato +
                 "<CR>390000300800" + Centralizar2(150, ing.Legenda) + "" + ing.Legenda +
                 "<CR>390000201000235" + "Data: " + ing.DataHora + 
                 "<CR>390000201200235" + "Valor:  R$ " + ing.Valor +
@@ -300,8 +301,10 @@ namespace VNJIngressos
 
       public DateTime DataHora { get; set; }
 
-      public string Categoria { get; set; }
-    }
+        public string Categoria { get; set; }
+
+        public string Campeonato { get; set; }
+        }
     
     }
 }
