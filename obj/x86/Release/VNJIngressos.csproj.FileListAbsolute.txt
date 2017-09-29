@@ -6,4 +6,3 @@ C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.Propertie
 C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.csproj.GenerateResource.Cache
 C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.exe
 C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.pdb
-C:\xampp\htdocs\integracaoDatamaxAllegro2\obj\x86\Release\VNJIngressos.csprojResolveAssemblyReference.cache
