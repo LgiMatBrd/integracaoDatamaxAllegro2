@@ -20,7 +20,7 @@ namespace VNJIngressos
     private Button button2;
     private Button button3;
 
-    string stringConexao = "SERVER=191.232.241.36;" + "DATABASE=app_hml;" + "UID=root;" + "PASSWORD=AquiNaoJacare;";
+    string stringConexao = "SERVER=191.232.241.36;" + "DATABASE=app_hml;" + "UID=root;" + "PASSWORD=vnj!db2017!;";
 
     public frmPrincipal()
         {
@@ -104,7 +104,7 @@ namespace VNJIngressos
             /////////////////
             string canhoto = "<STX>L<CR>D11" +
                 "<CR>29000030" + Centralizar2(108, ing.Titulo) + "0390" + ing.Titulo +
-                "<CR>29000020" + Centralizar2(110, ing.Legenda) + "0370" + ing.Legenda +
+                "<CR>29000020" + Centralizar2(110, ing.Legenda + ing.Categoria) + "0370" + ing.Legenda + ing.Categoria +
                 "<CR>29000020" + Centralizar2(82, ing.Campeonato) + "0350" + ing.Campeonato +
                 "<CR>290000301630335" + ing.DataHora +
                 "<CR>29000060" + Centralizar2(135, ing.Valor.ToString()) + "0300" + "R$ " + ing.Valor +
@@ -118,7 +118,7 @@ namespace VNJIngressos
             string corpoIngresso = "<CR>" +
                 "<CR>390000400400" + Centralizar2(160, ing.Titulo) + "" + ing.Titulo +
                 "<CR>390000200600" + Centralizar2(130, ing.Campeonato) + "" + ing.Campeonato +
-                "<CR>390000300800" + Centralizar2(150, ing.Legenda) + "" + ing.Legenda +
+                "<CR>390000300800" + Centralizar2(150, ing.Legenda + ing.Categoria) + "" + ing.Legenda + ing.Categoria +
                 "<CR>390000201000235" + "Data: " + ing.DataHora + 
                 "<CR>390000201200235" + "Valor:  R$ " + ing.Valor +
                 "<CR>390000201350235" + ing.Observacao +
