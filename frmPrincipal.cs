@@ -20,7 +20,7 @@ namespace VNJIngressos
     private Button button2;
     private Button button3;
 
-    string stringConexao = "SERVER=191.232.241.36;" + "DATABASE=app_hml;" + "UID=root;" + "PASSWORD=vnj!db2017!;";
+    string stringConexao = "";
 
     public frmPrincipal()
         {
